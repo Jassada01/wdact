@@ -1,0 +1,14 @@
+http://www.apc.com/us/en/tools/download/software_comp.cfm?sw_sku=SFPCNS42-V
+
+
+SELECT a.*, IFNULL(b.cnt, 0) as cnt FROM m_sex a LEFT JOIN (Select c.sex, count(c.sex) as cnt From m_wd_team a Inner Join wd_team_data b ON a.team_ID = b.team_ID Inner Join wd_db c ON b.wd_id = c.wd_id WHERE a.team_ID = 10 GROUP BY c.sex ) b ON a.sex_id = b.sex 
+
+
+SELECT c.occ_type, COUNT(c.occ_type) as cnt From wd_team_data a INNER Join wd_db b ON a.wd_id = b.wd_id INNER JOIN m_occ_type c ON b.occ_type = c.id Where a.team_ID = 1 Group By c.occ_type 
+
+
+Select d.GEO_ID, count(d.GEO_ID) as cnt From wd_team_data a INNER Join wd_db b ON a.wd_id = b.wd_id INNER Join add_districts c ON b.add_code = c.DISTRICT_CODE INNER JOIN add_geography d ON c.GEO_ID = d.GEO_ID WHERE a.team_ID = 1 GROUP By d.GEO_ID 
+
+SELECT a.GEO_NAME, IFNULL(b.cnt, '-') as cnt FROM add_geography a LEFT Join (Select d.GEO_ID, count(d.GEO_ID) as cnt From wd_team_data a INNER Join wd_db b ON a.wd_id = b.wd_id INNER Join add_districts c ON b.add_code = c.DISTRICT_CODE INNER JOIN add_geography d ON c.GEO_ID = d.GEO_ID WHERE a.team_ID = 1 GROUP By d.GEO_ID) b ON a.GEO_ID = b.GEO_ID 
+
+Select a.*, b.age, d.PROVINCE_NAME, e.occ_type From wd_db a Inner Join wd_cal_age b ON a.wd_id = b.wd_id INNER JOIN add_districts c ON a.add_code = c.DISTRICT_CODE INNER Join add_provinces d ON c.PROVINCE_ID = d.PROVINCE_ID INNER Join m_occ_type e ON a.occ_type = e.id 
